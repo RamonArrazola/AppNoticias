@@ -18,6 +18,7 @@ export class NewsService {
   constructor(private http: HttpClient) { }
 
   private executeQuery<T>(endpoint: string){
+    console.log("query ejecutado");
     return this.http.get<T>(`${ apiUrl }${ endpoint }`,{
       params: {
         apiKey: apiKey,
@@ -27,9 +28,7 @@ export class NewsService {
   }
 
   getTopHeadlines():Observable<Article[]>{
-    return this.executeQuery<NewsResponse>(`/top-headlines?sources=techcrunch`).pipe(
-      map(({ articles }) => articles)
-    );
+    return this.getTopHeadlinesCategory('technology');
   }
 
   getTopHeadlinesCategory(category: string, loadMore: Boolean = false):Observable<Article[]>{
